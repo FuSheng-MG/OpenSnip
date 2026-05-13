@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import './i18n/i18n';
 import { ToastProvider } from "./components/ui";
+import { CommandPalette } from "./components/ui";
+import { ThemeProvider, useTheme } from "./providers";
 import { Settings } from "./components/layout";
 import { SelectionOverlay, type SelectionRegion } from "./components/capture";
 import { CanvasProvider, useCanvas, AnnotationCanvas, AnnotationToolbar, LayerPanel, BeautifyPanel } from "./components/annotation";
@@ -156,11 +158,8 @@ function AppContent() {
   const [isCapturing, setIsCapturing] = useState(false);
   const [captureMode, setCaptureMode] = useState<"region" | "window" | "fullscreen">("region");
   const [capturedImage, setCapturedImage] = useState<CapturedImage | null>(null);
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-  }, [theme]);
+  const { theme, setTheme } = useTheme();
+  const [showPalette, setShowPalette] = useState(false);
 
   const startCapture = useCallback((mode: "region" | "window" | "fullscreen") => {
     setCaptureMode(mode);
@@ -180,6 +179,10 @@ function AppContent() {
       if (e.key === "Escape" && isCapturing) {
         e.preventDefault();
         setIsCapturing(false);
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        setShowPalette((p) => !p);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -253,8 +256,8 @@ function AppContent() {
       <header className="flex items-center justify-between h-9 px-3 border-b border-[var(--color-border)] bg-[var(--color-background)] shrink-0">
         <span className="text-xs font-medium text-[var(--color-text-muted)] select-none">OpenSnip</span>
         <div className="flex items-center gap-1">
-          <button onClick={() => setTheme(t => t === "dark" ? "light" : "dark")} className="px-2 py-0.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] rounded transition-colors" title="主题">
-            {theme === "dark" ? "☀️" : "🌙"}
+          <button onClick={() => setTheme(theme === "dark" ? "light" : theme === "light" ? "system" : "dark")} className="px-2 py-0.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] rounded transition-colors" title="主题">
+            {theme === "dark" ? "🌙" : theme === "light" ? "☀️" : "💻"}
           </button>
           <button onClick={() => setView(v => v === "settings" ? "home" : "settings")} className="px-2 py-0.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] rounded transition-colors" title="设置">
             {view === "settings" ? "← 返回" : "⚙️"}
@@ -288,6 +291,7 @@ function AppContent() {
       {isCapturing && (
         <SelectionOverlay mode={captureMode} onCapture={handleCapture} onCancel={handleCancelCapture} />
       )}
+      {showPalette && <CommandPalette onClose={() => setShowPalette(false)} />}
     </div>
   );
 }
@@ -298,11 +302,13 @@ function AppContent() {
 function App() {
   if (isPinMode) return <PinPage />;
   return (
-    <ToastProvider>
-      <CanvasProvider>
-        <AppContent />
-      </CanvasProvider>
-    </ToastProvider>
+    <ThemeProvider>
+      <ToastProvider>
+        <CanvasProvider>
+          <AppContent />
+        </CanvasProvider>
+      </ToastProvider>
+    </ThemeProvider>
   );
 }
 

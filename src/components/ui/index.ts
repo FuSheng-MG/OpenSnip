@@ -5,3 +5,4 @@ export { Modal } from "./Modal";
 export { Tooltip } from "./Tooltip";
 export { Dropdown } from "./Dropdown";
 export { ToastProvider, useToast, type Toast, type ToastType } from "./Toast";
+export { CommandPalette } from "./CommandPalette";
