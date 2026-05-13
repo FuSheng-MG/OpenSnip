@@ -78,8 +78,8 @@ export function LayerPanel() {
   };
 
   return (
-    <aside className="w-[240px] border-l border-[var(--color-border)] bg-[var(--color-background)] p-3 flex flex-col">
-      <div className="text-sm font-semibold text-[var(--color-text)] mb-3">图层管理</div>
+    <aside className="w-[240px] h-full border-l border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-3 flex flex-col">
+      <div className="text-sm font-semibold text-white/85 mb-3">图层管理</div>
 
       <div className="flex-1 overflow-auto space-y-1" onDragOver={onDragOver}>
         {layers.map((layer, idx) => (

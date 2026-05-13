@@ -51,18 +51,18 @@ function FloatingBar({
 }) {
   if (!capturedImage) return null;
   return (
-    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-3 py-1.5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl shadow-lg z-30">
-      <button onClick={onStartCapture} className="px-2.5 py-1 text-xs text-[var(--color-text)] hover:bg-[var(--color-background)] rounded-lg transition-colors" title="重截 (R)">🔄 重截</button>
-      <div className="w-px h-4 bg-[var(--color-border)]" />
-      <button onClick={onPin} className="px-2.5 py-1 text-xs text-[var(--color-text)] hover:bg-[var(--color-background)] rounded-lg transition-colors" title="钉到桌面">📌 钉图</button>
-      <button onClick={onSvgExport} className="px-2.5 py-1 text-xs text-[var(--color-text)] hover:bg-[var(--color-background)] rounded-lg transition-colors" title="SVG 导出">SVG</button>
-      <button onClick={onSaveToFile} className="px-2.5 py-1 text-xs text-[var(--color-text)] hover:bg-[var(--color-background)] rounded-lg transition-colors" title="保存为 PNG">💾 保存</button>
-      <div className="w-px h-4 bg-[var(--color-border)]" />
+    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1 px-3 py-1.5 bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-2xl shadow-lg z-30 animate-slide-up">
+      <button onClick={onStartCapture} className="px-2.5 py-1 text-xs text-white/75 hover:text-white hover:bg-white/[0.06] rounded-lg transition-all duration-150" title="重截 (R)">🔄 重截</button>
+      <div className="w-px h-4 bg-white/[0.08]" />
+      <button onClick={onPin} className="px-2.5 py-1 text-xs text-white/75 hover:text-white hover:bg-white/[0.06] rounded-lg transition-all duration-150" title="钉到桌面">📌 钉图</button>
+      <button onClick={onSvgExport} className="px-2.5 py-1 text-xs text-white/75 hover:text-white hover:bg-white/[0.06] rounded-lg transition-all duration-150" title="SVG 导出">SVG</button>
+      <button onClick={onSaveToFile} className="px-2.5 py-1 text-xs text-white/75 hover:text-white hover:bg-white/[0.06] rounded-lg transition-all duration-150" title="保存为 PNG">💾 保存</button>
+      <div className="w-px h-4 bg-white/[0.08]" />
       <button onClick={() => { setShowLayers(!showLayers); if (!showLayers) setShowBeautify(false); }}
-        className={`px-2.5 py-1 text-xs rounded-lg transition-colors ${showLayers ? "bg-blue-500/20 text-blue-600 dark:text-blue-400" : "text-[var(--color-text)] hover:bg-[var(--color-background)]"}`}
+        className={`px-2.5 py-1 text-xs rounded-lg transition-all duration-150 ${showLayers ? "bg-white/[0.12] text-white/90" : "text-white/75 hover:text-white hover:bg-white/[0.06]"}`}
         title="图层">📐</button>
       <button onClick={() => { setShowBeautify(!showBeautify); if (!showBeautify) setShowLayers(false); }}
-        className={`px-2.5 py-1 text-xs rounded-lg transition-colors ${showBeautify ? "bg-green-500/20 text-green-600 dark:text-green-400" : "text-[var(--color-text)] hover:bg-[var(--color-background)]"}`}
+        className={`px-2.5 py-1 text-xs rounded-lg transition-all duration-150 ${showBeautify ? "bg-white/[0.12] text-white/90" : "text-white/75 hover:text-white hover:bg-white/[0.06]"}`}
         title="美化">✨</button>
     </div>
   );
@@ -101,7 +101,7 @@ function AnnotateView({
   }, [capturedImage?.id]);
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden bg-[var(--color-surface)]">
+    <div className="flex-1 flex flex-col overflow-hidden bg-[var(--color-surface)] animate-fade-in">
       {/* 浮动工具栏 — 贴近画布 */}
       <AnnotationToolbar />
       
@@ -253,8 +253,8 @@ function AppContent() {
   return (
     <div className="h-screen flex flex-col bg-[var(--color-background)]">
       {/* 极简顶栏 */}
-      <header className="flex items-center justify-between h-9 px-3 border-b border-[var(--color-border)] bg-[var(--color-background)] shrink-0">
-        <span className="text-xs font-medium text-[var(--color-text-muted)] select-none">OpenSnip</span>
+      <header className="flex items-center justify-between h-9 px-3 border-b border-white/[0.06] bg-white/[0.02] backdrop-blur-xl shrink-0">
+        <span className="text-xs font-medium text-white/45 select-none">OpenSnip</span>
         <div className="flex items-center gap-1">
           <button onClick={() => setTheme(theme === "dark" ? "light" : theme === "light" ? "system" : "dark")} className="px-2 py-0.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] rounded transition-colors" title="主题">
             {theme === "dark" ? "🌙" : theme === "light" ? "☀️" : "💻"}

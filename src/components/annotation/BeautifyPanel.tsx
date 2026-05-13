@@ -49,8 +49,8 @@ export function BeautifyPanel() {
   ];
 
   return (
-    <aside className="w-[240px] border-l border-[var(--color-border)] bg-[var(--color-background)] p-3 flex flex-col text-sm">
-      <div className="font-semibold text-[var(--color-text)] mb-3">一键美化</div>
+    <aside className="w-[240px] h-full border-l border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-3 flex flex-col text-sm">
+      <div className="font-semibold text-white/85 mb-3">一键美化</div>
 
       {/* Preset buttons */}
       <div className="grid grid-cols-2 gap-2 mb-3">
