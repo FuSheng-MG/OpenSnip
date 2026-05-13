@@ -272,16 +272,41 @@ function AppContent() {
         ) : capturedImage ? (
           <AnnotateView capturedImage={capturedImage} onStartCapture={() => startCapture("region")} onSaveToFile={handleSaveToFile} onPin={handlePin} onSvgExport={handleSvgExport} />
         ) : (
-          <div className="flex-1 flex items-center justify-center bg-[var(--color-surface)]">
-            <div className="text-center">
-              <div className="text-5xl mb-3">📸</div>
-              <p className="text-sm text-[var(--color-text-muted)] mb-4">
-                <kbd className="px-2 py-0.5 bg-[var(--color-background)] border border-[var(--color-border)] rounded text-xs font-mono">Ctrl+Alt+A</kbd> 截图
-              </p>
-              <div className="flex gap-2 justify-center">
-                <button onClick={() => startCapture("region")} className="px-4 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded-lg transition-colors">区域截图</button>
-                <button onClick={() => startCapture("fullscreen")} className="px-4 py-1.5 border border-[var(--color-border)] hover:bg-[var(--color-background)] text-sm rounded-lg transition-colors text-[var(--color-text)]">全屏截图</button>
+          <div className="flex-1 flex items-center justify-center" style={{ background: "#0b0d11" }}>
+            <div className="text-center space-y-8 animate-fade-in">
+              <div>
+                <div className="text-6xl mb-4 select-none">📸</div>
+                <h1 className="text-2xl font-bold text-white/90 tracking-tight">OpenSnip</h1>
+                <p className="text-sm text-white/35 mt-1">现代化的开发者截图工作流工具</p>
               </div>
+
+              {/* Quick actions */}
+              <div className="flex gap-3">
+                {[
+                  { key: "region", label: "区域截图", shortcut: "Ctrl+Alt+A", desc: "框选屏幕任意区域" },
+                  { key: "fullscreen", label: "全屏截图", shortcut: "Ctrl+Alt+F", desc: "捕捉整个屏幕" },
+                ].map((a) => (
+                  <button
+                    key={a.key}
+                    onClick={() => startCapture(a.key as "region" | "fullscreen")}
+                    className="w-48 p-5 rounded-2xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] hover:border-white/[0.10] transition-all duration-150 text-left group"
+                  >
+                    <div className="text-xs font-medium text-white/80 mb-2">{a.label}</div>
+                    <div className="text-[10px] text-white/30 mb-3">{a.desc}</div>
+                    <kbd className="inline-block text-[10px] text-white/40 font-mono bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 rounded-md group-hover:text-white/60 group-hover:bg-white/[0.10] transition-all">
+                      {a.shortcut}
+                    </kbd>
+                  </button>
+                ))}
+              </div>
+
+              {/* Footer hints */}
+              <div className="flex gap-4 justify-center text-[10px] text-white/20">
+                <span><kbd className="text-white/30 font-mono">Ctrl+K</kbd> 命令面板</span>
+                <span><kbd className="text-white/30 font-mono">Esc</kbd> 取消截图</span>
+              </div>
+
+              <div className="text-[10px] text-white/15 font-mono">v1.0.0</div>
             </div>
           </div>
         )}
